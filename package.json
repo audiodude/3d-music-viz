@@ -1,0 +1,27 @@
+{
+  "name": "3d-music-viz",
+  "version": "0.1.0",
+  "description": "Music visualization in 3d using three.js",
+  "main": "index.js",
+  "author": "Travis Briggs <audiodude@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "three": "^0.122.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "webpack serve"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "css-loader": "^5.0.1",
+    "html-webpack-plugin": "^4.5.0",
+    "progress-bar-webpack-plugin": "^2.1.0",
+    "style-loader": "^2.0.0",
+    "typescript": "^3",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
