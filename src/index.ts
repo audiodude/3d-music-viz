@@ -1,13 +1,24 @@
 // add styles
-import './style.css';
+import "./style.css";
 // three.js
-import * as THREE from 'three';
+import * as THREE from "three";
+import { MidiFile } from "midifile-ts";
+import { getMidi } from "./midi";
+import { Buffer } from "buffer/";
+
+// Polyfill nodejs Buffer.
+(window as any).Buffer = Buffer;
 
 // create the scene
 const scene = new THREE.Scene();
 
 // create the camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 
 const renderer = new THREE.WebGLRenderer();
 
@@ -66,4 +77,7 @@ function render(): void {
   renderer.render(scene, camera);
 }
 
-animate();
+getMidi().then((midi: MidiFile) => {
+  console.log(midi);
+  animate();
+});
