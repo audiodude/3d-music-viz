@@ -9,6 +9,7 @@ import { Buffer } from "buffer/";
 import { Blip } from "./blip";
 import { Strip } from "./strip";
 import { Vector3 } from "three";
+import { Impulse } from "./impulse";
 
 // Polyfill nodejs Buffer.
 (window as any).Buffer = Buffer;
@@ -48,6 +49,7 @@ light2.position.set(-100, 100, -100);
 scene.add(light2);
 
 const clock = new THREE.Clock();
+let impulse;
 const strip = new Strip(clock);
 scene.add(strip);
 
@@ -57,15 +59,19 @@ camera.lookAt(scene.position);
 
 function animate(): void {
   requestAnimationFrame(animate);
-  update();
+  const clockDelta = clock.getDelta();
+  update(clockDelta);
   renderer.render(scene, camera);
 }
 
-function update(): void {
-  strip.update();
+function update(clockDelta: number): void {
+  impulse.update(clockDelta);
+  strip.update(clockDelta);
 }
 
 getMidi().then((midi: MidiFile) => {
   window.console.log(midi);
+  impulse = new Impulse(midi, clock);
+  strip.setImpulse(impulse);
   animate();
 });

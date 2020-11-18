@@ -16,13 +16,25 @@ export class Blip extends THREE.Mesh {
     this.clock = clock;
   }
 
-  update(active: boolean = false) {
-    if (active && !this.active) {
-      this.position.y += 1;
-      this.active = true;
+  update(active: boolean = false, highlighted: boolean = false) {
+    if (active) {
+      if (!this.active) {
+        this.active = true;
+      }
+      if (highlighted) {
+        (this.material as THREE.MeshBasicMaterial).color = new THREE.Color(
+          0xff0000
+        );
+      } else {
+        (this.material as THREE.MeshBasicMaterial).color = new THREE.Color(
+          0xaaaaaa
+        );
+      }
     } else if (!active && this.active) {
-      this.position.y -= 1;
       this.active = false;
+      (this.material as THREE.MeshBasicMaterial).color = new THREE.Color(
+        0xaaaaaa
+      );
     }
   }
 }
