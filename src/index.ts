@@ -2,6 +2,7 @@
 import "./style.css";
 // three.js
 import * as THREE from "three";
+import * as TWEEN from "@tweenjs/tween.js";
 import { MidiFile } from "midifile-ts";
 import { getMidi } from "./midi";
 import { Buffer } from "buffer/";
@@ -59,6 +60,7 @@ camera.lookAt(scene.position);
 
 function animate(): void {
   requestAnimationFrame(animate);
+  TWEEN.update();
   const clockDelta = clock.getDelta();
   update(clockDelta);
   renderer.render(scene, camera);
