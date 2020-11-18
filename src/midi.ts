@@ -4,7 +4,6 @@ export function getMidi(): Promise<MidiFile> {
   return fetch("http://localhost:8000/static/test.mid")
     .then((r: Response) => r.arrayBuffer())
     .then((buf: ArrayBuffer) => {
-      window.console.log(buf);
       return read(buf);
     });
 }

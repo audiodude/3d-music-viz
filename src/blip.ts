@@ -1,18 +1,28 @@
 import * as THREE from "three";
 
 export class Blip extends THREE.Mesh {
-  constructor(pos: THREE.Vector3) {
-    const material = new THREE.MeshBasicMaterial({
-      color: 0xaaaaaa,
-      wireframe: true,
-    });
-    super(new THREE.BoxGeometry(0.1, 0.1, 0.1), material);
+  private readonly clock: THREE.Clock;
+  active: boolean = false;
+
+  constructor(pos: THREE.Vector3, clock: THREE.Clock) {
+    super(
+      new THREE.BoxGeometry(0.1, 0.1, 0.1),
+      new THREE.MeshBasicMaterial({
+        color: 0xaaaaaa,
+        wireframe: true,
+      })
+    );
     this.position.copy(pos);
+    this.clock = clock;
   }
 
-  update() {
-    const timer = 0.002 * Date.now();
-    this.position.y = 0.5 + 0.5 * Math.sin(timer);
-    this.rotation.x += 0.1;
+  update(active: boolean = false) {
+    if (active && !this.active) {
+      this.position.y += 1;
+      this.active = true;
+    } else if (!active && this.active) {
+      this.position.y -= 1;
+      this.active = false;
+    }
   }
 }

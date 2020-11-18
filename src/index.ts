@@ -33,7 +33,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // add axis to the scene
-const axis = new THREE.AxesHelper(10);
+const axis = new THREE.AxesHelper(16);
 
 scene.add(axis);
 
@@ -41,20 +41,17 @@ scene.add(axis);
 const light = new THREE.DirectionalLight(0xffffff, 1.0);
 
 light.position.set(100, 100, 100);
-
 scene.add(light);
 
 const light2 = new THREE.DirectionalLight(0xffffff, 1.0);
-
 light2.position.set(-100, 100, -100);
-
 scene.add(light2);
 
-const strip = new Strip();
-
+const clock = new THREE.Clock();
+const strip = new Strip(clock);
 scene.add(strip);
 
-camera.position.copy(new Vector3(16, 16, 16);
+camera.position.set(10, 10, 10);
 
 camera.lookAt(scene.position);
 
@@ -69,5 +66,6 @@ function update(): void {
 }
 
 getMidi().then((midi: MidiFile) => {
+  window.console.log(midi);
   animate();
 });
