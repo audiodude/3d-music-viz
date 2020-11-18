@@ -35,9 +35,8 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // add axis to the scene
-const axis = new THREE.AxesHelper(16);
-
-scene.add(axis);
+// const axis = new THREE.AxesHelper(16);
+// scene.add(axis);
 
 // add lights
 const light = new THREE.DirectionalLight(0xffffff, 1.0);
@@ -54,7 +53,7 @@ let impulse;
 const strip = new Strip(clock);
 scene.add(strip);
 
-camera.position.set(10, 10, 10);
+camera.position.set(8, 8, 8);
 
 camera.lookAt(scene.position);
 

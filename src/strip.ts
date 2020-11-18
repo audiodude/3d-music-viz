@@ -17,7 +17,7 @@ export class Strip extends THREE.Group {
     super();
     const inc = (end - start) / n;
     for (let i = 0; i < n; i++) {
-      const blip = new Blip(new Vector3(0, 0, inc * i), clock);
+      const blip = new Blip(new Vector3(0, 0, end - inc * (i + 1)), clock);
       this.add(blip);
       this.blips.push(blip);
     }

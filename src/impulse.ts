@@ -16,7 +16,7 @@ export class Impulse {
     this.channelEvents = midi.tracks[0].filter((evt) => {
       return evt.type === "channel";
     }) as Event<"channel">[];
-    this.nextDelta = this.channelEvents[0].deltaTime;
+    this.nextDelta = this.channelEvents && this.channelEvents[0].deltaTime;
   }
 
   update(clockDelta: number) {

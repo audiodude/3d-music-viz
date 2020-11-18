@@ -9,7 +9,7 @@ export class Blip extends THREE.Mesh {
 
   constructor(pos: THREE.Vector3, clock: THREE.Clock) {
     super(
-      new THREE.BoxGeometry(0.1, 0.1, 0.1),
+      new THREE.BoxGeometry(0.4, 0.4, 0.4),
       new THREE.MeshBasicMaterial({
         color: 0xaaaaaa,
         wireframe: true,
@@ -31,9 +31,9 @@ export class Blip extends THREE.Mesh {
       y: this.position.y + 1,
       z: this.position.z,
     };
-    this.tweenUp = new TWEEN.Tween(start).to({ ...end }, 500);
+    this.tweenUp = new TWEEN.Tween(start).to({ ...end }, 250);
     this.tweenUp.easing(TWEEN.Easing.Sinusoidal.In);
-    this.tweenDown = new TWEEN.Tween(end).to({ ...start }, 500);
+    this.tweenDown = new TWEEN.Tween(end).to({ ...start }, 250);
     this.tweenDown.easing(TWEEN.Easing.Sinusoidal.Out);
     this.tweenUp.onUpdate(() => {
       this.position.set(start.x, start.y, start.z);
@@ -41,6 +41,11 @@ export class Blip extends THREE.Mesh {
     this.tweenUp.chain(this.tweenDown);
     this.tweenDown.onUpdate(() => {
       this.position.set(end.x, end.y, end.z);
+    });
+    this.tweenDown.onComplete(() => {
+      (this.material as THREE.MeshBasicMaterial).color = new THREE.Color(
+        0xaaaaaa
+      );
     });
   }
 
@@ -61,9 +66,6 @@ export class Blip extends THREE.Mesh {
       }
     } else if (!active && this.active) {
       this.active = false;
-      (this.material as THREE.MeshBasicMaterial).color = new THREE.Color(
-        0xaaaaaa
-      );
     }
   }
 }
