@@ -7,6 +7,8 @@ import { getMidi } from "./midi";
 import { Buffer } from "buffer/";
 
 import { Blip } from "./blip";
+import { Strip } from "./strip";
+import { Vector3 } from "three";
 
 // Polyfill nodejs Buffer.
 (window as any).Buffer = Buffer;
@@ -48,16 +50,11 @@ light2.position.set(-100, 100, -100);
 
 scene.add(light2);
 
-const blip = new Blip();
+const strip = new Strip();
 
-scene.add(blip);
+scene.add(strip);
 
-blip.position.x = 0.5;
-blip.rotation.y = 0.5;
-
-camera.position.x = 5;
-camera.position.y = 5;
-camera.position.z = 5;
+camera.position.copy(new Vector3(16, 16, 16);
 
 camera.lookAt(scene.position);
 
@@ -68,9 +65,7 @@ function animate(): void {
 }
 
 function update(): void {
-  const timer = 0.002 * Date.now();
-  blip.position.y = 0.5 + 0.5 * Math.sin(timer);
-  blip.rotation.x += 0.1;
+  strip.update();
 }
 
 getMidi().then((midi: MidiFile) => {
