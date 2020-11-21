@@ -52,7 +52,7 @@ const light2 = new THREE.DirectionalLight(0xffffff, 1.0);
 light2.position.set(-100, 100, -100);
 scene.add(light2);
 
-let time = Date.now();
+let time = TWEEN.now();
 let clock: ClockLike;
 if (!realtime) {
   clock = new ConstantClock();

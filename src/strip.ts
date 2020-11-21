@@ -25,11 +25,13 @@ export class Strip extends THREE.Group {
   update(clockDelta: number) {
     this.elapsed += clockDelta;
     if (this.elapsed > 2) {
-      this.elapsed -= 2;
+      // Hard sync after 16 sixteenth notes.
+      this.elapsed = 0;
     }
     for (let i = 0; i < this.blips.length; i++) {
       const blip = this.blips[i];
       const active =
+        // 120 BPM
         this.elapsed >= i * 0.125 && this.elapsed < (i + 1) * 0.125;
       const highlighted = this.impulse && this.impulse.on;
       blip.update(active, highlighted);
