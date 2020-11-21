@@ -8,16 +8,11 @@ export class Strip extends THREE.Group {
   private elapsed: number = 0;
   private impulse: Impulse;
 
-  constructor(
-    private readonly clock: THREE.Clock,
-    start: number = 0,
-    end: number = 8,
-    n: number = 16
-  ) {
+  constructor(start: number = 0, end: number = 8, n: number = 16) {
     super();
     const inc = (end - start) / n;
     for (let i = 0; i < n; i++) {
-      const blip = new Blip(new Vector3(0, 0, end - inc * (i + 1)), clock);
+      const blip = new Blip(new Vector3(0, 0, end - inc * (i + 1)));
       this.add(blip);
       this.blips.push(blip);
     }

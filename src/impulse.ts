@@ -8,10 +8,7 @@ export class Impulse {
   nextDelta: number;
   on: boolean = false;
 
-  constructor(
-    private readonly midi: MidiFile,
-    private readonly clock: THREE.Clock
-  ) {
+  constructor(private readonly midi: MidiFile) {
     this.ticksPerSecond = midi.header.ticksPerBeat * 2; // Hardcode 120 BPM.
     this.channelEvents = midi.tracks[0].filter((evt) => {
       return evt.type === "channel";

@@ -2,12 +2,11 @@ import * as THREE from "three";
 import * as TWEEN from "@tweenjs/tween.js";
 
 export class Blip extends THREE.Mesh {
-  private readonly clock: THREE.Clock;
   active: boolean = false;
   private tweenUp: TWEEN.Tween<{ x: number; y: number; z: number }>;
   private tweenDown: TWEEN.Tween<{ x: number; y: number; z: number }>;
 
-  constructor(pos: THREE.Vector3, clock: THREE.Clock) {
+  constructor(pos: THREE.Vector3) {
     super(
       new THREE.BoxGeometry(0.4, 0.4, 0.4),
       new THREE.MeshBasicMaterial({
@@ -16,7 +15,6 @@ export class Blip extends THREE.Mesh {
       })
     );
     this.position.copy(pos);
-    this.clock = clock;
     this.setupTweens();
   }
 
