@@ -11,12 +11,16 @@ import { Blip } from "./blip";
 import { Strip } from "./strip";
 import { Vector3 } from "three";
 import { Impulse } from "./impulse";
+import { ClockLike, ConstantClock } from "./clocklike";
 
 // Polyfill nodejs Buffer.
 (window as any).Buffer = Buffer;
 
 // create the scene
 const scene = new THREE.Scene();
+
+const FPS = 60;
+const realtime = true;
 
 // create the camera
 const camera = new THREE.PerspectiveCamera(
@@ -48,9 +52,16 @@ const light2 = new THREE.DirectionalLight(0xffffff, 1.0);
 light2.position.set(-100, 100, -100);
 scene.add(light2);
 
-const clock = new THREE.Clock();
+let time = Date.now();
+let clock: ClockLike;
+if (!realtime) {
+  clock = new ConstantClock();
+} else {
+  clock = new THREE.Clock();
+}
+
 let impulse;
-const strip = new Strip(clock);
+const strip = new Strip();
 scene.add(strip);
 
 camera.position.set(8, 8, 8);
@@ -58,9 +69,15 @@ camera.position.set(8, 8, 8);
 camera.lookAt(scene.position);
 
 function animate(): void {
-  requestAnimationFrame(animate);
-  TWEEN.update();
+  window.setTimeout(() => requestAnimationFrame(animate), 1000 / FPS);
+
   const clockDelta = clock.getDelta();
+  if (!realtime) {
+    time += clockDelta * 1000;
+    TWEEN.update(time);
+  } else {
+    TWEEN.update();
+  }
   update(clockDelta);
   renderer.render(scene, camera);
 }
@@ -72,7 +89,7 @@ function update(clockDelta: number): void {
 
 getMidi().then((midi: MidiFile) => {
   window.console.log(midi);
-  impulse = new Impulse(midi, clock);
+  impulse = new Impulse(midi);
   strip.setImpulse(impulse);
   animate();
 });
