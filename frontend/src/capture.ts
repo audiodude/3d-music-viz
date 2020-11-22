@@ -8,15 +8,15 @@ export class CanvasCapture {
       return;
     }
 
-    this.canvas = this.canvas || document.getElementsByTagName("CANVAS")[0];
-    var img = this.canvas.toDataURL("image/png");
+    this.canvas = this.canvas || document.getElementsByTagName('CANVAS')[0];
+    var img = this.canvas.toDataURL('image/png');
 
     const formData = new FormData();
-    formData.append("frame", (this.frameCount++).toString());
-    formData.append("data", img);
+    formData.append('frame', (this.frameCount++).toString());
+    formData.append('data', img);
 
-    fetch("http://localhost:5000/capture", {
-      method: "POST",
+    fetch('http://localhost:5000/capture', {
+      method: 'POST',
       body: formData,
     }).catch(() => {
       // If the server is unavailable, stop the capture process.

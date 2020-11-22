@@ -1,13 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var cors = require("cors");
 
-const app = express();
-app.use(cors());
-
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+router.get("/capture", function (req, res, next) {
+  res.status(204).send("");
 });
 
 module.exports = router;

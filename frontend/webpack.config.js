@@ -7,6 +7,10 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 module.exports = {
   mode: 'development',
 
+  devServer: {
+    port: 8000,
+  },
+
   entry: './src/index.ts',
   output: {
     filename: 'bundle.js',
