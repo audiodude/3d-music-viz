@@ -7,9 +7,7 @@ import { MidiFile } from 'midifile-ts';
 import { getMidi } from './midi';
 import { Buffer } from 'buffer/';
 
-import { Blip } from './blip';
 import { Strip } from './strip';
-import { Vector3 } from 'three';
 import { Impulse } from './impulse';
 import { ClockLike, ConstantClock } from './clocklike';
 import { CanvasCapture } from './capture';
