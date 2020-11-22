@@ -10,10 +10,15 @@ export class Impulse {
 
   constructor(private readonly midi: MidiFile) {
     this.ticksPerSecond = midi.header.ticksPerBeat * 2; // Hardcode 120 BPM.
-    this.channelEvents = midi.tracks[0].filter((evt) => {
-      return evt.type === 'channel';
-    }) as Event<'channel'>[];
-    this.nextDelta = this.channelEvents && this.channelEvents[0].deltaTime;
+    let i = 0;
+    while (this.nextDelta === undefined) {
+      this.channelEvents = midi.tracks[i].filter((evt) => {
+        return evt.type === 'channel';
+      }) as Event<'channel'>[];
+      console.log(this.channelEvents);
+      this.nextDelta = this.channelEvents && this.channelEvents[0]?.deltaTime;
+      i++;
+    }
   }
 
   update(clockDelta: number, time?: number) {

@@ -90,6 +90,7 @@ function update(clockDelta: number, time: number): void {
 }
 
 getMidi().then((midi: MidiFile) => {
+  // console.log(midi);
   impulse = new Impulse(midi);
   strip.setImpulse(impulse);
   animate();
