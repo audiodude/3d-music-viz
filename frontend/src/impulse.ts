@@ -23,7 +23,7 @@ export class Impulse {
 
   update(clockDelta: number, time?: number) {
     if (this.channelEvents.length == 0) {
-      return;
+      return false;
     }
 
     this.elapsedTicks += clockDelta * this.ticksPerSecond;
@@ -42,5 +42,6 @@ export class Impulse {
         this.nextDelta = nextEvt.deltaTime;
       }
     }
+    return true;
   }
 }

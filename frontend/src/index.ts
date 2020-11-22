@@ -68,8 +68,11 @@ camera.position.set(8, 8, 8);
 
 camera.lookAt(scene.position);
 
+let playing = true;
 function animate(): void {
-  if (realtime) {
+  if (!playing) {
+    scene.remove(strip);
+  } else if (realtime) {
     window.setTimeout(() => requestAnimationFrame(animate), 1000 / FPS);
   } else {
     capture.captureFrame().then(() => {
@@ -85,7 +88,7 @@ function animate(): void {
 }
 
 function update(clockDelta: number, time: number): void {
-  impulse.update(clockDelta, time);
+  playing = impulse.update(clockDelta, time);
   strip.update(clockDelta, time);
 }
 
