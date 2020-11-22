@@ -5,7 +5,7 @@ export class CanvasCapture {
 
   captureFrame = function () {
     if (this.hasError) {
-      return;
+      return Promise.resolve(undefined);
     }
 
     this.canvas = this.canvas || document.getElementsByTagName('CANVAS')[0];
@@ -18,9 +18,16 @@ export class CanvasCapture {
     return fetch('http://localhost:5000/capture', {
       method: 'POST',
       body: formData,
-    }).catch(() => {
-      // If the server is unavailable, stop the capture process.
-      this.hasError = true;
-    });
+    })
+      .then((resp) => {
+        if (!resp.ok) {
+          throw Error(resp.statusText);
+        }
+        return resp;
+      })
+      .catch((error) => {
+        // If the server is unavailable, stop the capture process.
+        this.hasError = true;
+      });
   };
 }

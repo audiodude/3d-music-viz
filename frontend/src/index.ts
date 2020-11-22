@@ -74,10 +74,6 @@ function animate(): void {
     scene.remove(strip);
   } else if (realtime) {
     window.setTimeout(() => requestAnimationFrame(animate), 1000 / FPS);
-  } else {
-    capture.captureFrame().then(() => {
-      requestAnimationFrame(animate);
-    });
   }
 
   const clockDelta = clock.getDelta();
@@ -85,6 +81,11 @@ function animate(): void {
   TWEEN.update(time);
   update(clockDelta, time);
   renderer.render(scene, camera);
+  if (playing && !realtime) {
+    capture.captureFrame().then(() => {
+      requestAnimationFrame(animate);
+    });
+  }
 }
 
 function update(clockDelta: number, time: number): void {
@@ -92,6 +93,7 @@ function update(clockDelta: number, time: number): void {
   strip.update(clockDelta, time);
 }
 
+// Start by getting the MIDI, then begin animation.
 getMidi().then((midi: MidiFile) => {
   // console.log(midi);
   impulse = new Impulse(midi);

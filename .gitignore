@@ -1,4 +1,8 @@
+.DS_Store
 .awcache/
 .vscode/
 node_modules/
+
 public/midi/*
+
+out/*.png
