@@ -15,7 +15,7 @@ export class CanvasCapture {
     formData.append('frame', (this.frameCount++).toString());
     formData.append('data', img);
 
-    fetch('http://localhost:5000/capture', {
+    return fetch('http://localhost:5000/capture', {
       method: 'POST',
       body: formData,
     }).catch(() => {

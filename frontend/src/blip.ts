@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import * as TWEEN from "@tweenjs/tween.js";
+import * as THREE from 'three';
+import * as TWEEN from '@tweenjs/tween.js';
 
 export class Blip extends THREE.Mesh {
   active: boolean = false;
@@ -47,18 +47,18 @@ export class Blip extends THREE.Mesh {
     });
   }
 
-  update(active: boolean = false, highlighted: boolean = false) {
+  update(active: boolean = false, highlighted: boolean = false, time: number) {
     if (active) {
       if (!this.active) {
         this.active = true;
-        this.tweenUp.start();
+        this.tweenUp.start(time);
       }
       if (highlighted) {
         (this.material as THREE.MeshBasicMaterial).color = new THREE.Color(
           0xff0000
         );
       }
-    } else if (!active && this.active) {
+    } else if (this.active) {
       this.active = false;
     }
   }

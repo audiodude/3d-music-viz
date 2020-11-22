@@ -1,17 +1,18 @@
 // add styles
-import "./style.css";
+import './style.css';
 // three.js
-import * as THREE from "three";
-import * as TWEEN from "@tweenjs/tween.js";
-import { MidiFile } from "midifile-ts";
-import { getMidi } from "./midi";
-import { Buffer } from "buffer/";
+import * as THREE from 'three';
+import * as TWEEN from '@tweenjs/tween.js';
+import { MidiFile } from 'midifile-ts';
+import { getMidi } from './midi';
+import { Buffer } from 'buffer/';
 
-import { Blip } from "./blip";
-import { Strip } from "./strip";
-import { Vector3 } from "three";
-import { Impulse } from "./impulse";
-import { ClockLike, ConstantClock } from "./clocklike";
+import { Blip } from './blip';
+import { Strip } from './strip';
+import { Vector3 } from 'three';
+import { Impulse } from './impulse';
+import { ClockLike, ConstantClock } from './clocklike';
+import { CanvasCapture } from './capture';
 
 // Polyfill nodejs Buffer.
 (window as any).Buffer = Buffer;
@@ -20,7 +21,8 @@ import { ClockLike, ConstantClock } from "./clocklike";
 const scene = new THREE.Scene();
 
 const FPS = 60;
-const realtime = true;
+const realtime = false;
+const capture = new CanvasCapture();
 
 // create the camera
 const camera = new THREE.PerspectiveCamera(
@@ -69,26 +71,27 @@ camera.position.set(8, 8, 8);
 camera.lookAt(scene.position);
 
 function animate(): void {
-  window.setTimeout(() => requestAnimationFrame(animate), 1000 / FPS);
+  if (realtime) {
+    window.setTimeout(() => requestAnimationFrame(animate), 1000 / FPS);
+  } else {
+    capture.captureFrame().then(() => {
+      requestAnimationFrame(animate);
+    });
+  }
 
   const clockDelta = clock.getDelta();
-  if (!realtime) {
-    time += clockDelta * 1000;
-    TWEEN.update(time);
-  } else {
-    TWEEN.update();
-  }
-  update(clockDelta);
+  time += clockDelta * 1000;
+  TWEEN.update(time);
+  update(clockDelta, time);
   renderer.render(scene, camera);
 }
 
-function update(clockDelta: number): void {
-  impulse.update(clockDelta);
-  strip.update(clockDelta);
+function update(clockDelta: number, time: number): void {
+  impulse.update(clockDelta, time);
+  strip.update(clockDelta, time);
 }
 
 getMidi().then((midi: MidiFile) => {
-  window.console.log(midi);
   impulse = new Impulse(midi);
   strip.setImpulse(impulse);
   animate();

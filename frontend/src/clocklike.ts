@@ -1,4 +1,4 @@
-import THREE = require("three");
+import THREE = require('three');
 
 export interface ClockLike {
   getDelta: () => number;
@@ -6,6 +6,6 @@ export interface ClockLike {
 
 export class ConstantClock implements ClockLike {
   getDelta() {
-    return 1 / 60; // 60 FPS
+    return 1 / 30; // 30 FPS
   }
 }
