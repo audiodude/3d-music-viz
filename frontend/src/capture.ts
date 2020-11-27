@@ -13,6 +13,7 @@ export class CanvasCapture {
 
     const formData = new FormData();
     formData.append('frame', (this.frameCount++).toString());
+    formData.append('filename', 'test');
     formData.append('data', img);
 
     return fetch('http://localhost:5000/capture', {

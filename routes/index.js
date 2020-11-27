@@ -15,7 +15,8 @@ router.post('/capture', function (req, res, next) {
   var data = req.fields.data.split(';base64,')[1];
   var buf = new Buffer.from(data, 'base64');
 
-  var file_name = 'out/frame_' + padDigits(req.fields.frame, 5) + '.png';
+  // prettier-ignore
+  var file_name = `out/${req.fields.filename}_${padDigits(req.fields.frame, 5)}.png`;
   fs.writeFile(file_name, buf, function (err) {
     if (err) {
       console.error('Error writing %s: %s', file_name, err);
@@ -24,7 +25,7 @@ router.post('/capture', function (req, res, next) {
       return;
     }
 
-    console.log(Date.now() + ' -- Saved frame ' + req.fields.frame);
+    console.log('Saved ' + file_name);
     res.status(204).send('');
   });
 });
