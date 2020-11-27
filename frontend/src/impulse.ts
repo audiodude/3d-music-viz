@@ -28,7 +28,7 @@ export class Impulse {
 
     this.elapsedTicks += clockDelta * this.ticksPerSecond;
     if (this.elapsedTicks >= this.nextDelta) {
-      this.elapsedTicks = 0;
+      this.elapsedTicks -= this.nextDelta;
 
       // Both NoteOnEvent and NoteOffEvent have the same fields, so just cast.
       const evt = this.channelEvents.shift() as NoteOnEvent;
