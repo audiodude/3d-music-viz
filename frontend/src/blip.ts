@@ -53,13 +53,13 @@ export class Blip extends THREE.Mesh {
         this.active = true;
         this.tweenUp.start(time);
       }
-      if (highlighted) {
-        (this.material as THREE.MeshBasicMaterial).color = new THREE.Color(
-          0xff0000
-        );
-      }
     } else if (this.active) {
       this.active = false;
+    }
+    if (this.active && highlighted) {
+      (this.material as THREE.MeshBasicMaterial).color = new THREE.Color(
+        0xff0000
+      );
     }
   }
 }
